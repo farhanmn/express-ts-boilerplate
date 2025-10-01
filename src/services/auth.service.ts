@@ -1,15 +1,13 @@
-import { PrismaClient } from '../generated/prisma/client';
+import { prismaClient } from "../utils/database.util";
 import { jwtSign, verifyPassword } from "../utils/auth.util";
 import { LoginResponse } from "../types/auth.type";
-
-const prisma = new PrismaClient();
 
 export const authService = {
   login: async (
     email: string,
     password: string,
   ): Promise<LoginResponse> => {
-    const user = await prisma.users.findFirst({
+    const user = await prismaClient.users.findFirst({
       where: {
         email,
       }
